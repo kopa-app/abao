@@ -1,5 +1,5 @@
 sms = require("source-map-support").install({handleUncaughtExceptions: false})
-ramlParser = require 'raml-parser'
+ramlParser = require 'raml-1-parser'
 async = require 'async'
 
 options = require './options'
@@ -33,7 +33,10 @@ class Abao
       ,
       # Load RAML
       (callback) ->
-        ramlParser.loadFile(config.ramlPath).then (raml) ->
+        ramlParser.loadRAML(config.ramlPath).then (api) ->
+          raml api.toJSON({
+            serializeMetadata: false
+          })
           callback(null, raml)
         , callback
       ,
@@ -53,4 +56,3 @@ class Abao
 
 module.exports = Abao
 module.exports.options = options
-

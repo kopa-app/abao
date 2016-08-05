@@ -1,6 +1,6 @@
 {assert} = require 'chai'
 sinon = require 'sinon'
-ramlParser = require 'raml-parser'
+ramlParser = require 'raml-1-parser'
 
 proxyquire = require('proxyquire').noCallThru()
 
@@ -28,8 +28,11 @@ describe '#addTests', ->
 
       before (done) ->
         ramlFile = "#{RAML_DIR}/single-get.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -77,8 +80,11 @@ describe '#addTests', ->
       before (done) ->
 
         ramlFile = "#{RAML_DIR}/1-get-1-post.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -125,8 +131,11 @@ describe '#addTests', ->
       before (done) ->
 
         ramlFile = "#{RAML_DIR}/ref_other_schemas.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -170,8 +179,11 @@ describe '#addTests', ->
       before (done) ->
 
         ramlFile = "#{RAML_DIR}/inline_and_included_schemas.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -215,8 +227,11 @@ describe '#addTests', ->
       before (done) ->
 
         ramlFile = "#{RAML_DIR}/three-levels.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -256,8 +271,11 @@ describe '#addTests', ->
       before (done) ->
 
         ramlFile = "#{RAML_DIR}/no-method.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -299,8 +317,11 @@ describe '#addTests', ->
             responses:
               204:
         """
-        ramlParser.load(raml)
-        .then (data) ->
+        ramlParser.parseRAML(raml)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -329,8 +350,11 @@ describe '#addTests', ->
 
       before (done) ->
         ramlFile = "#{RAML_DIR}/vendor-content-type.raml"
-        ramlParser.loadFile(ramlFile)
-        .then (data) ->
+        ramlParser.loadRAML(ramlFile)
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -375,8 +399,11 @@ describe '#addTests', ->
 
       before (done) ->
 
-        ramlParser.loadFile("#{RAML_DIR}/required_query_parameter.raml")
-        .then (data) ->
+        ramlParser.loadRAML("#{RAML_DIR}/required_query_parameter.raml")
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
@@ -396,8 +423,11 @@ describe '#addTests', ->
       callback = ''
 
       before (done) ->
-        ramlParser.loadFile("#{RAML_DIR}/non_required_query_parameter.raml")
-        .then (data) ->
+        ramlParser.loadRAML("#{RAML_DIR}/non_required_query_parameter.raml")
+        .then (api) ->
+          data = api.toJSON({
+            serializeMetadata: false
+          })
           callback = sinon.stub()
           callback.returns(done())
 
